@@ -1,0 +1,15 @@
+artifact_uri: file:///c:/Users/Zakaria/Desktop/Data%20Science/Openclassrooms/supervisedlearning/screencasts/mlruns/675740370410610204/1519a26b8bb74255b03751abd1549de1/artifacts
+end_time: 1724315111075
+entry_point_name: ''
+experiment_id: '675740370410610204'
+lifecycle_stage: active
+run_id: 1519a26b8bb74255b03751abd1549de1
+run_name: catboost_light_Auvergne-Rhône-Alpes
+run_uuid: 1519a26b8bb74255b03751abd1549de1
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1724315023157
+status: 3
+tags: []
+user_id: Zakaria

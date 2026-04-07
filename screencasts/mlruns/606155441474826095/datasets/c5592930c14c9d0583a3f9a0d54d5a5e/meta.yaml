@@ -1,0 +1,39 @@
+digest: b07058c9
+name: dataset
+profile: '{"num_rows": 91753, "num_elements": 3486614}'
+schema: '{"mlflow_colspec": [{"type": "integer", "name": "id_transaction", "required":
+  true}, {"type": "double", "name": "prix", "required": true}, {"type": "integer",
+  "name": "type_batiment_Appartement", "required": true}, {"type": "integer", "name":
+  "type_batiment_Maison", "required": true}, {"type": "integer", "name": "vefa", "required":
+  true}, {"type": "integer", "name": "n_pieces", "required": true}, {"type": "integer",
+  "name": "surface_habitable", "required": true}, {"type": "double", "name": "latitude",
+  "required": true}, {"type": "double", "name": "longitude", "required": true}, {"type":
+  "integer", "name": "mois_transaction", "required": true}, {"type": "integer", "name":
+  "annee_transaction", "required": true}, {"type": "integer", "name": "en_dessous_du_marche",
+  "required": true}, {"type": "integer", "name": "nom_region_Auvergne-Rh\u00f4ne-Alpes",
+  "required": true}, {"type": "integer", "name": "nom_region_Nouvelle-Aquitaine",
+  "required": true}, {"type": "integer", "name": "nom_region_Occitanie", "required":
+  true}, {"type": "integer", "name": "nom_region_Provence-Alpes-C\u00f4te d''Azur",
+  "required": true}, {"type": "integer", "name": "nom_region_\u00cele-de-France",
+  "required": true}, {"type": "integer", "name": "ville_demandee", "required": true},
+  {"type": "double", "name": "prix_m2_moyen_mois_precedent", "required": true}, {"type":
+  "long", "name": "nb_transactions_mois_precedent", "required": true}, {"type": "double",
+  "name": "prix_m2_moyen_glissant_6mo", "required": true}, {"type": "double", "name":
+  "nb_transaction_moyen_glissant_6mo", "required": true}, {"type": "double", "name":
+  "taux_endettement", "required": true}, {"type": "double", "name": "euros_par_habitant",
+  "required": true}, {"type": "double", "name": "fraction_depot_banque", "required":
+  true}, {"type": "double", "name": "fraction_assurance_vie", "required": true}, {"type":
+  "double", "name": "fraction_fonds_communs", "required": true}, {"type": "double",
+  "name": "fraction_fond_pension", "required": true}, {"type": "double", "name": "fraction_titres_non_action",
+  "required": true}, {"type": "double", "name": "fraction_actions", "required": true},
+  {"type": "double", "name": "variation_taux_endettement", "required": true}, {"type":
+  "double", "name": "acceleration_taux_endettement", "required": true}, {"type": "double",
+  "name": "taux_interet", "required": true}, {"type": "long", "name": "emprunts_M\u20ac",
+  "required": true}, {"type": "double", "name": "indice_reference_loyers", "required":
+  true}, {"type": "double", "name": "variation_taux_interet", "required": true}, {"type":
+  "double", "name": "acceleration_taux_interet", "required": true}, {"type": "double",
+  "name": "moyenne_glissante_6mo_variation_taux_interet", "required": true}]}'
+source: '{"tags": {"mlflow.user": "Zakaria", "mlflow.source.name": "c:\\Users\\Zakaria\\Desktop\\Data
+  Science\\Openclassrooms\\supervisedlearning\\.venv\\Lib\\site-packages\\ipykernel_launcher.py",
+  "mlflow.source.type": "LOCAL"}}'
+source_type: code

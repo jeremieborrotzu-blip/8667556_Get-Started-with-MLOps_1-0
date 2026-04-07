@@ -1,0 +1,15 @@
+artifact_uri: file:///c:/Users/Zakaria/Desktop/Data%20Science/Openclassrooms/supervisedlearning/screencasts/mlruns/247887458207936819/e470a3f4236249f4b2e99371296c5df3/artifacts
+end_time: 1724315359444
+entry_point_name: ''
+experiment_id: '247887458207936819'
+lifecycle_stage: active
+run_id: e470a3f4236249f4b2e99371296c5df3
+run_name: catboost_light_Nouvelle-Aquitaine
+run_uuid: e470a3f4236249f4b2e99371296c5df3
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1724315285188
+status: 3
+tags: []
+user_id: Zakaria

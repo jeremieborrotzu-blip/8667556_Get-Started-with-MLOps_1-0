@@ -1,0 +1,15 @@
+artifact_uri: file:///c:/Users/Zakaria/Desktop/Data%20Science/Openclassrooms/supervisedlearning/screencasts/mlruns/606155441474826095/2b83d5ff39e147e9a0bc3496d33cf438/artifacts
+end_time: 1724314703933
+entry_point_name: ''
+experiment_id: '606155441474826095'
+lifecycle_stage: active
+run_id: 2b83d5ff39e147e9a0bc3496d33cf438
+run_name: catboost_Île-de-France
+run_uuid: 2b83d5ff39e147e9a0bc3496d33cf438
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1724314547942
+status: 3
+tags: []
+user_id: Zakaria

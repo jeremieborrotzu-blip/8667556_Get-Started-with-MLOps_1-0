@@ -1,0 +1,1 @@
+['type_batiment_Appartement', 'surface_habitable', 'prix_m2_moyen_mois_precedent', 'nb_transactions_mois_precedent', 'taux_interet', 'variation_taux_interet', 'acceleration_taux_interet', 'longitude', 'latitude', 'vefa']
