@@ -14,7 +14,7 @@ This repository centralizes all resources (screencast code, exercise starters an
 
 ### Downloading the data
 
-You can download all the datasets you will need via [this zip file](https://s3.eu-west-1.amazonaws.com/course.oc-static.com/8667556/data_original_raw.zip). It contains:
+You can download all the datasets you will need via [this zip file](https://course.oc-static.com/8667556/data_original_raw.zip). It contains:
 * **transactions_immobilieres.parquet**: the main dataset used throughout Part 1
 * **transactions_par_ville.parquet**: a dataset with city-level aggregated data, used across all parts of the course for feature and target computation
 * **transactions_post_feature_engineering.parquet**: the dataset used in Parts 2 and 3, where feature engineering is considered complete
@@ -24,7 +24,7 @@ You can download all the datasets you will need via [this zip file](https://s3.e
 
 The datasets are either in parquet format (more convenient than CSV and compatible with both Pandas and Polars) or in JSON format for feature lists.
 
-If you want to rebuild the transactions_immobilieres.parquet file from scratch, you can start from the raw data in [this zip file](https://s3.eu-west-1.amazonaws.com/course.oc-static.com/8667556/data_en.zip) and use the preprocessing.py script.
+If you want to rebuild the transactions_immobilieres.parquet file from scratch, you can start from the raw data in [this zip file](https://course.oc-static.com/8667556/data_en.zip) and use the preprocessing.py script.
 
 To keep the repository lightweight, the data files and models saved via MLflow have not been included here. You have the code available to rebuild them.
 
