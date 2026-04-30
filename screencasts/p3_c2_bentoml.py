@@ -22,7 +22,7 @@ import bentoml
 # %%
 
 transactions = pl.read_parquet(
-    os.path.join(PROJECT_PATH, "transactions_post_feature_engineering.parquet")
+    os.path.join(PROJECT_PATH, "real_estate_transactions_engineered.parquet")
 )
 
 # %%

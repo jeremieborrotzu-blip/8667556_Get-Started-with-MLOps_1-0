@@ -25,7 +25,7 @@ from catboost import CatBoostRegressor
 # %%
 # -------------------------- Load Data --------------------------
 transactions = pl.read_parquet(
-    os.path.join(PROJECT_PATH, "transactions_post_feature_engineering.parquet")
+    os.path.join(PROJECT_PATH, "real_estate_transactions_engineered.parquet")
 )
 
 X = transactions.drop([REGRESSION_TARGET, CLASSIFICATION_TARGET])
@@ -172,7 +172,7 @@ def get_X_y_particular_feature_value(
     return X_filtered.drop(["target"], axis=1), X_filtered["target"]
 
 
-regions_features = [col for col in feature_names if col.startswith("nom_region")]
+regions_features = [col for col in feature_names if col.startswith("region_name")]
 X_train_y_train_regions = {
     region: get_X_y_particular_feature_value(X_train, y_train, region, 1)
     for region in regions_features

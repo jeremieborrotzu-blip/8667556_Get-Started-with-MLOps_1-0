@@ -29,22 +29,22 @@ from feature_engineering_functions import (
 
 
 transactions = pl.read_parquet(
-    os.path.join(PROJECT_PATH, "transactions_immobilieres.parquet")
+    os.path.join(PROJECT_PATH, "real_estate_transactions.parquet")
 )
 
 transactions = transactions.with_columns(
-    pl.col("departement").cast(pl.Int32),
-    pl.col("mois_transaction").cast(pl.Int32),
-    pl.col("vefa").cast(pl.Int32),
+    pl.col("department").cast(pl.Int32),
+    pl.col("transaction_month").cast(pl.Int32),
+    pl.col("off_plan").cast(pl.Int32),
 )
 
 transactions_per_city = pl.read_parquet(
-    os.path.join(PROJECT_PATH, "transactions_par_ville.parquet")
+    os.path.join(PROJECT_PATH, "transactions_by_city.parquet")
 )
 
 transactions_per_city = transactions_per_city.with_columns(
-    pl.col("departement").cast(pl.Int32),
-    pl.col("mois_transaction").cast(pl.Int32),
+    pl.col("department").cast(pl.Int32),
+    pl.col("transaction_month").cast(pl.Int32),
 )
 # %%
 transactions.head()
@@ -59,14 +59,14 @@ transactions_per_city.head()
 
 transactions_per_city = compute_city_features(
     transactions_per_city,
-    feature_name="ville_demandee",
+    feature_name="city_requested",
     quantile_threshold=0.8,
     verbose=True,
 )
 
 
 # %%
-transactions_per_city["ville_demandee"].describe()
+transactions_per_city["city_requested"].describe()
 
 # %%
 
@@ -78,11 +78,11 @@ transactions_per_city
 transactions_per_city = compute_price_per_m2_features(
     transactions_per_city,
     sort_columns=[
-        "departement",
-        "ville",
-        "id_ville",
-        "annee_transaction",
-        "mois_transaction",
+        "department",
+        "city",
+        "city_id",
+        "transaction_year",
+        "transaction_month",
     ],
 )
 
@@ -91,13 +91,13 @@ transactions_per_city = compute_price_per_m2_features(
 transactions = transactions.join(
     transactions_per_city,
     on=[
-        "departement",
-        "ville",
-        "id_ville",
-        "annee_transaction",
-        "mois_transaction",
-        "prix_m2_moyen",
-        "nb_transactions_mois",
+        "department",
+        "city",
+        "city_id",
+        "transaction_year",
+        "transaction_month",
+        "avg_price_per_m2",
+        "num_transactions_month",
     ],
     how="inner",
 )
@@ -132,7 +132,7 @@ monthly_macro_eco_context
 monthly_macro_eco_context = calculate_interest_rate_features(
     monthly_macro_eco_context,
     aggregation_period="6mo",
-    interest_rate_col="taux_interet",
+    interest_rate_col="interest_rate",
 )
 
 
@@ -147,15 +147,15 @@ transactions = add_economical_context_features(
 
 # %%
 # ----------------- One Hot Encoding -------------------------
-transactions = transactions.to_dummies(columns=["type_batiment"])
-transactions = transactions.to_dummies(columns=["nom_region"])
+transactions = transactions.to_dummies(columns=["building_type"])
+transactions = transactions.to_dummies(columns=["region_name"])
 
 # %%
 transactions
 
 # %%
 transactions.write_parquet(
-    os.path.join(PROJECT_PATH, "transactions_post_feature_engineering.parquet")
+    os.path.join(PROJECT_PATH, "real_estate_transactions_engineered.parquet")
 )
 
 
@@ -167,33 +167,33 @@ This info can be useful for interpretation purposes.
 """
 
 cols_extra_info = [
-    "id_transaction",
-    "date_transaction",
-    "id_ville",
-    "ville",
-    "code_departement",
-    "departement",
-    "code_region",
+    "transaction_id",
+    "transaction_date",
+    "city_id",
+    "city",
+    "department_code",
+    "department",
+    "region_code",
     "region",
-    "adresse",
-    "code_postal",
-    "id_parcelle_cadastre",
-    "prix_m2",          # Excluded to avoid data leakage
-    "prix_m2_moyen",    # Excluded to avoid data leakage
-    "nom_departement",  # Excluded for now
+    "address",
+    "postal_code",
+    "cadastral_parcel_id",
+    "price_per_m2",          # Excluded to avoid data leakage
+    "avg_price_per_m2",    # Excluded to avoid data leakage
+    "department_name",  # Excluded for now
 ]
 
-transactions_extra_infos = transactions.select(
+transactions_metadata = transactions.select(
     [e for e in cols_extra_info if e in transactions.columns]
 )
 
 cols_to_drop = [
     "USD_par_habitant",
     "date",
-    "ville_right",
+    "city_right",
 ]
 cols_to_drop.extend(cols_extra_info)
-cols_to_drop.remove("id_transaction")
+cols_to_drop.remove("transaction_id")
 
 transactions = transactions.drop(
     [col for col in transactions.columns if col in cols_to_drop]

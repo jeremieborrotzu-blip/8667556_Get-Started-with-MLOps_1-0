@@ -1,10 +1,10 @@
 [
-    "type_batiment_Appartement",
-    "vefa",
-    "ville_demandee",
-    "nom_region_Auvergne-Rh\u00f4ne-Alpes",
-    "nom_region_Nouvelle-Aquitaine",
-    "nom_region_Occitanie",
-    "nom_region_Provence-Alpes-C\u00f4te d'Azur",
-    "nom_region_\u00cele-de-France"
+    "building_type_apartment",
+    "off_plan",
+    "city_requested",
+    "region_auvergne_rhone_alpes",
+    "region_nouvelle_aquitaine",
+    "region_occitanie",
+    "region_provence_alpes_cote_dazur",
+    "region_ile_de_france"
 ]

@@ -25,10 +25,10 @@ from sklearn.svm import SVC
 # %%
 # -------------------------- Load Data --------------------------
 transactions = pd.read_parquet(
-    os.path.join(PROJECT_PATH, "transactions_post_feature_engineering.parquet")
+    os.path.join(PROJECT_PATH, "real_estate_transactions_engineered.parquet")
 )
 
-transactions_extra_info = pd.read_parquet("../transactions_extra_infos.parquet")
+transactions_extra_info = pd.read_parquet("../transactions_metadata.parquet")
 
 # %%
 with open("features_used.json", "r") as f:
@@ -42,12 +42,12 @@ numerical_features = [col for col in feature_names if col not in categorical_fea
 
 # %%
 transactions = transactions.merge(
-    transactions_extra_info[["id_transaction", "date_transaction"]],
-    on="id_transaction",
+    transactions_extra_info[["transaction_id", "transaction_date"]],
+    on="transaction_id",
     how="left",
 )
 
-transactions["year_month"] = transactions["date_transaction"].dt.to_period("M")
+transactions["year_month"] = transactions["transaction_date"].dt.to_period("M")
 
 # %%
 # -------------------------- Target Evolution Analysis --------------------------
@@ -90,7 +90,7 @@ transactions_post_covid = transactions[transactions["year_month"] > "2021-07"]
 feature_names
 # %%
 # -------------------------- Data Example 1 --------------------------
-feature_tested = "nb_transactions_mois_precedent"
+feature_tested = "num_transactions_previous_month"
 sns.displot(
     transactions_pre_covid,
     x=feature_tested,
@@ -113,7 +113,7 @@ sns.displot(
 
 # %%
 # -------------------------- Data Example 2 --------------------------
-feature_tested = "variation_taux_interet"
+feature_tested = "interest_rate_change"
 sns.displot(
     transactions_pre_covid,
     x=feature_tested,

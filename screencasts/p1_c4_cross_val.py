@@ -23,7 +23,7 @@ from xgboost import XGBClassifier
 # ------------------- Loading Data --------------------
 # %%
 transactions = pl.read_parquet(
-    os.path.join(PROJECT_PATH, "transactions_post_feature_engineering.parquet")
+    os.path.join(PROJECT_PATH, "real_estate_transactions_engineered.parquet")
 )
 
 with open("../features_used.json", "r") as f:
@@ -100,13 +100,13 @@ y_classification = transactions[CLASSIFICATION_TARGET]
 X_group = X.to_pandas()
 
 # %%
-X_group["nom_region"] = pd.from_dummies(
-    X_group[[col for col in X_group.columns if col.startswith("nom_region")]]
+X_group["region_name"] = pd.from_dummies(
+    X_group[[col for col in X_group.columns if col.startswith("region_name")]]
 )
 
 # %%
 X_group = X_group.drop(
-    [col for col in X_group.columns if col.startswith("nom_region_")], axis=1
+    [col for col in X_group.columns if col.startswith("region_name_")], axis=1
 )
 
 # %%
@@ -117,7 +117,7 @@ scores_xgboost = perform_cross_validation(
     model=xgboost_classifier,
     cross_val_type=LeaveOneGroupOut(),
     scoring_metrics=classification_scoring_metrics,
-    groups=X_group["nom_region"].values,
+    groups=X_group["region_name"].values,
 )
 
 # %%

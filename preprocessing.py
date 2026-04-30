@@ -40,9 +40,9 @@ average_per_month_per_city_enough_transactions, average_per_month_per_city = (
     get_info_per_month_cities_enough_transactions(
         filtered_transactions,
         grouping_cols=[
-            "departement",
-            "ville",
-            "id_ville",
+            "department",
+            "city",
+            "city_id",
             TRANSACTION_YEAR,
             TRANSACTION_MONTH,
         ],
@@ -76,16 +76,16 @@ END EXPLORATORY
 # %%
 filtered_transactions = filtered_transactions.join(
     average_per_month_per_city_enough_transactions,
-    on=["departement", "ville", "id_ville", TRANSACTION_YEAR, TRANSACTION_MONTH],
+    on=["department", "city", "city_id", TRANSACTION_YEAR, TRANSACTION_MONTH],
     how="inner",
 )
 
 
 # %%
 
-# average_per_month_per_city_enough_transactions = average_per_month_per_city_enough_transactions.drop("ville")
+# average_per_month_per_city_enough_transactions = average_per_month_per_city_enough_transactions.drop("city")
 filtered_transactions = add_classification_target_to_transactions(
-    filtered_transactions, "en_dessous_du_marche", 0.1
+    filtered_transactions, "below_market", 0.1
 )
 
 
@@ -110,7 +110,7 @@ departments_regions = load_regions_data(REGIONS_FILE_PATH, departments_to_keep)
 
 # %%
 filtered_transactions = filtered_transactions.join(
-    departments_regions, how="left", on="departement"
+    departments_regions, how="left", on="department"
 )
 
 
@@ -123,10 +123,10 @@ filtered_transactions.columns
 # %%
 
 filtered_transactions.write_parquet(
-    os.path.join(PROJECT_PATH, "transactions_immobilieres.parquet")
+    os.path.join(PROJECT_PATH, "real_estate_transactions.parquet")
 )
 
 # %%
 average_per_month_per_city_enough_transactions.write_parquet(
-    os.path.join(PROJECT_PATH, "transactions_par_ville.parquet")
+    os.path.join(PROJECT_PATH, "transactions_by_city.parquet")
 )

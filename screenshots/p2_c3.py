@@ -25,7 +25,7 @@ from sklearn.metrics import precision_recall_curve, auc, roc_auc_score, roc_curv
 # %%
 # -------------------------- Load Data --------------------------
 transactions = pl.read_parquet(
-    os.path.join(PROJECT_PATH, "transactions_post_feature_engineering.parquet")
+    os.path.join(PROJECT_PATH, "real_estate_transactions_engineered.parquet")
 )
 
 X = transactions.drop([REGRESSION_TARGET, CLASSIFICATION_TARGET])

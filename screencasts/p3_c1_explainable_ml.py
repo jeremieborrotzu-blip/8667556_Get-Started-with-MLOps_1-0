@@ -26,10 +26,10 @@ from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 # %%
 # -------------------------- Load Data --------------------------
 transactions = pl.read_parquet(
-    os.path.join(PROJECT_PATH, "transactions_post_feature_engineering.parquet")
+    os.path.join(PROJECT_PATH, "real_estate_transactions_engineered.parquet")
 )
 
-selected_region = "nom_region_Occitanie"
+selected_region = "region_occitanie"
 region_transactions = transactions.filter(pl.col(selected_region) == 1)
 
 X = region_transactions.drop([REGRESSION_TARGET, CLASSIFICATION_TARGET])
@@ -72,12 +72,12 @@ plt.xlabel("Relative Importance")
 # %%
 # ------------ Method 1: Manual selection ---------------
 feature_names_simplified = [
-    "surface_habitable",
-    "prix_m2_moyen_mois_precedent",
+    "living_area",
+    "avg_price_per_m2_previous_month",
     "longitude",
     "latitude",
-    "nb_transactions_mois_precedent",
-    "type_batiment_Appartement",
+    "num_transactions_previous_month",
+    "building_type_apartment",
 ]
 
 

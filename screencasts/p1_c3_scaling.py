@@ -22,7 +22,7 @@ from sklearn.model_selection import train_test_split
 # %%
 # -------------------- Data Loading ---------------------------
 transactions = pl.read_parquet(
-    os.path.join(PROJECT_PATH, "transactions_post_feature_engineering.parquet")
+    os.path.join(PROJECT_PATH, "real_estate_transactions_engineered.parquet")
 )
 
 X = transactions.drop([REGRESSION_TARGET, CLASSIFICATION_TARGET])

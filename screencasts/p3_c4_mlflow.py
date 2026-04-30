@@ -82,7 +82,7 @@ def get_features_most_importance(importances, feature_names, threshold=0.8):
 # %%
 # -------------------------- Load Data --------------------------
 transactions = pl.read_parquet(
-    os.path.join(PROJECT_PATH, "transactions_post_feature_engineering.parquet")
+    os.path.join(PROJECT_PATH, "real_estate_transactions_engineered.parquet")
 )
 
 
@@ -99,22 +99,22 @@ feature_names
 # %%
 # -------------------------- Data Split for screencast & exercise purposes --------------------------
 
-transactions_v1 = transactions.filter(pl.col("annee_transaction") < 2020)
+transactions_v1 = transactions.filter(pl.col("transaction_year") < 2020)
 
 transactions_v2 = transactions.filter(
-    pl.col("annee_transaction").is_between(2020, 2021)
+    pl.col("transaction_year").is_between(2020, 2021)
 )
 features_1 = [
-    "type_batiment_Appartement",
-    "surface_habitable",
-    "prix_m2_moyen_mois_precedent",
-    "nb_transactions_mois_precedent",
-    "taux_interet",
-    "variation_taux_interet",
-    "acceleration_taux_interet",
+    "building_type_apartment",
+    "living_area",
+    "avg_price_per_m2_previous_month",
+    "num_transactions_previous_month",
+    "interest_rate",
+    "interest_rate_change",
+    "interest_rate_acceleration",
 ]
 
-features_2 = features_1.extend(["longitude", "latitude", "vefa"])
+features_2 = features_1.extend(["longitude", "latitude", "off_plan"])
 
 
 # %%
@@ -136,7 +136,7 @@ for region in tqdm(
         "Nouvelle-Aquitaine",
     ]
 ):
-    region_transactions_v1 = transactions_v1.filter(pl.col("nom_region_" + region) == 1)
+    region_transactions_v1 = transactions_v1.filter(pl.col("region_name_" + region) == 1)
 
     experiment_tags = {
         "region": region,

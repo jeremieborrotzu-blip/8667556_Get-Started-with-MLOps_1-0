@@ -11,13 +11,13 @@ from settings import (
 
 def compute_city_features(
     transactions_per_city: pl.DataFrame,
-    feature_name: str = "ville_demandee",
+    feature_name: str = "city_requested",
     grouping_columns: list = [DEPARTEMENT, TRANSACTION_YEAR, TRANSACTION_MONTH],
     quantile_threshold=0.8,
     verbose: bool = False,
 ):
     nb_transactions_per_department = transactions_per_city.group_by(grouping_columns).agg(
-        pl.sum(NB_TRANSACTIONS_PER_MONTH).alias("nb_transactions_departement")
+        pl.sum(NB_TRANSACTIONS_PER_MONTH).alias("nb_transactions_department")
     )
 
     transactions_per_city = transactions_per_city.join(
@@ -30,9 +30,9 @@ def compute_city_features(
         (
             100
             * pl.col(NB_TRANSACTIONS_PER_MONTH)
-            / pl.col("nb_transactions_departement")
+            / pl.col("nb_transactions_department")
         ).alias("city_transaction_ratio")
-    ).drop("nb_transactions_departement")
+    ).drop("nb_transactions_department")
 
     if verbose:
         print(transactions_per_city.select("city_transaction_ratio").describe())
@@ -54,7 +54,7 @@ def compute_city_features(
 
 def create_debt_ratio_features(
     annual_macro_eco_context: pl.DataFrame,
-    debt_ratio_col: str = "taux_endettement",
+    debt_ratio_col: str = "debt_ratio",
 ):
     # Simple cast used for a join downstream
     annual_macro_eco_context = annual_macro_eco_context.with_columns(
@@ -94,15 +94,15 @@ def compute_price_per_m2_features(
             pl.col(AVERAGE_PRICE_PER_SQUARE_METER)
             .shift()
             .over(CITY_UNIQUE_ID)
-            .alias("prix_m2_moyen_mois_precedent"),
+            .alias("avg_price_per_m2_previous_month"),
             pl.col(NB_TRANSACTIONS_PER_MONTH)
             .shift()
             .over(CITY_UNIQUE_ID)
-            .alias("nb_transactions_mois_precedent"),
+            .alias("num_transactions_previous_month"),
             pl.col(AVERAGE_PRICE_PER_SQUARE_METER)
             .rolling_mean(window_size=6)
             .over(CITY_UNIQUE_ID)
-            .alias("prix_m2_moyen_glissant_" + aggregation_period),
+            .alias("avg_price_per_m2_glissant_" + aggregation_period),
             pl.col(NB_TRANSACTIONS_PER_MONTH)
             .rolling_mean(window_size=6)
             .over(CITY_UNIQUE_ID)
@@ -124,22 +124,22 @@ VERSION OF THE FUNCTION USED IN THE SCREENCAST P1_C3_FEATURE_ENGINEERING
 def compute_price_per_m2_features(
     average_per_month_per_city: pl.DataFrame,
     sort_columns: list = [
-        "departement",
-        "ville",
-        "id_ville",
+        "department",
+        "city",
+        "city_id",
     ],
 ):
     average_per_month_per_city = (
         average_per_month_per_city.sort(sort_columns)
         .with_columns(
-            pl.col("prix_m2_moyen")
+            pl.col("avg_price_per_m2")
             .shift()
-            .over(["departement", "ville", "id_ville"])
-            .alias("prix_m2_moyen_mois_precedent"),
+            .over(["department", "city", "city_id"])
+            .alias("avg_price_per_m2_previous_month"),
             pl.col(NB_TRANSACTIONS_PER_MONTH)
             .shift()
-            .over(["departement", "ville", "id_ville"])
-            .alias("nb_transactions_mois_precedent"),
+            .over(["department", "city", "city_id"])
+            .alias("num_transactions_previous_month"),
         )
         .filter(
             pl.all_horizontal(

@@ -1,1 +1,21 @@
-["type_batiment_Appartement", "vefa", "surface_habitable", "latitude", "longitude", "mois_transaction", "annee_transaction", "nom_region_Auvergne-Rh\u00f4ne-Alpes", "nom_region_Nouvelle-Aquitaine", "nom_region_Occitanie", "nom_region_Provence-Alpes-C\u00f4te d'Azur", "nom_region_\u00cele-de-France", "ville_demandee", "prix_m2_moyen_mois_precedent", "nb_transactions_mois_precedent", "taux_interet", "emprunts_M\u20ac", "variation_taux_interet", "acceleration_taux_interet"]
+[
+    "building_type_apartment",
+    "off_plan",
+    "living_area",
+    "latitude",
+    "longitude",
+    "transaction_month",
+    "transaction_year",
+    "region_auvergne_rhone_alpes",
+    "region_nouvelle_aquitaine",
+    "region_occitanie",
+    "region_provence_alpes_cote_dazur",
+    "region_ile_de_france",
+    "city_requested",
+    "avg_price_per_m2_previous_month",
+    "num_transactions_previous_month",
+    "interest_rate",
+    "loans_million_eur",
+    "interest_rate_change",
+    "interest_rate_acceleration"
+]

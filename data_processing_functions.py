@@ -99,9 +99,9 @@ def load_and_process_transactions(
 def get_info_per_month_cities_enough_transactions(
     filtered_transactions: pl.DataFrame,
     grouping_cols=[
-        "departement",
-        "ville",
-        "id_ville",
+        "department",
+        "city",
+        "city_id",
         TRANSACTION_YEAR,
         TRANSACTION_MONTH,
     ],
@@ -153,10 +153,10 @@ def load_regions_data(regions_file_path: str, departments_to_keep: list):
     departments_regions = pl.read_csv(regions_file_path)
 
     departments_regions = departments_regions.filter(
-        pl.col("code_departement").is_in(departments_to_keep)
+        pl.col("department_code").is_in(departments_to_keep)
     ).with_columns(
-        pl.col("code_departement").cast(pl.Int32).alias("departement"),
-        pl.col("code_region").cast(pl.Int32).alias("region"),
+        pl.col("department_code").cast(pl.Int32).alias("department"),
+        pl.col("region_code").cast(pl.Int32).alias("region"),
     )
 
     return departments_regions
@@ -172,9 +172,9 @@ def load_tax_households(
     city_scope: pl.DataFrame,
     cols_to_keep: list = [
         "date",
-        "departement",
-        "id_ville",
-        "ville",
+        "department",
+        "city_id",
+        "city",
         "n_foyers_fiscaux",
         "revenu_fiscal_moyen",
         "montant_impot_moyen",
@@ -186,7 +186,7 @@ def load_tax_households(
         pl.col(DEPARTEMENT).is_in(
             [str(e) for e in city_scope[DEPARTEMENT].unique()]
         )
-    ).with_columns([pl.col(e).cast(pl.Int32) for e in ["departement", "id_ville"]])
+    ).with_columns([pl.col(e).cast(pl.Int32) for e in ["department", "city_id"]])
 
     tax_households = tax_households.join(
         city_scope, how="inner", on=city_scope.columns
@@ -226,7 +226,7 @@ def load_monthly_macro_eco_context_data(
             .with_columns(pl.col("mois").forward_fill(), pl.col("IRL").forward_fill())
         )
         .drop("date_right")
-        .rename({"taux": "taux_interet", "IRL": "indice_reference_loyers"})
+        .rename({"taux": "interest_rate", "IRL": "rent_reference_index"})
     )
 
     return monthly_macro_eco_context
