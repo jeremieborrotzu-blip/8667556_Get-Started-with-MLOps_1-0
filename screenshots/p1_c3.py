@@ -31,11 +31,11 @@ highly_correlated_features = [
     "num_rooms",                 # Keep living area instead
     # "transaction_year",      # Keep debt ratio instead
     "euros_per_capita",       # Highly correlated with debt ratio
-    "montant_impot_moyen",      # Highly correlated with average taxable income
+    "avg_tax_amount",      # Highly correlated with average taxable income
     "life_insurance_share",
     "mutual_fund_share",
     "non_equity_securities_share",
     "equity_share",
-    "taux",
-    "IRL",
+    "interest_rate",
+    "rent_reference_index",
 ]

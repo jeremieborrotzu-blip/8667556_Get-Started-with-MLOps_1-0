@@ -53,20 +53,20 @@ def process_transactions(
     )
 
     filtered_transactions = filtered_transactions.filter(
-        pl.col("surface_terrains_nature") == "{}",
-        pl.col("surface_terrains_sols") == "{}",
-        pl.col("surface_terrains_agricoles") == "{}",
-        pl.col("surface_locaux_industriels") == "{}",
-        pl.col("surface_dependances") == "{}",
+        pl.col("natural_land_area") == "{}",
+        pl.col("ground_area") == "{}",
+        pl.col("agricultural_land_area") == "{}",
+        pl.col("industrial_premises_area") == "{}",
+        pl.col("outbuilding_area") == "{}",
     )
 
     filtered_transactions = filtered_transactions.drop(
         [
-            "surface_terrains_nature",
-            "surface_terrains_sols",
-            "surface_terrains_agricoles",
-            "surface_locaux_industriels",
-            "surface_dependances",
+            "natural_land_area",
+            "ground_area",
+            "agricultural_land_area",
+            "industrial_premises_area",
+            "outbuilding_area",
         ]
     )
 
@@ -109,7 +109,7 @@ def get_info_per_month_cities_enough_transactions(
     verbose=False,
 ):
     average_per_month_per_city = filtered_transactions.group_by(grouping_cols).agg(
-        pl.col(PRICE_PER_SQUARE_METER).mean().name.suffix("_moyen"),
+        pl.col(PRICE_PER_SQUARE_METER).mean().alias(AVERAGE_PRICE_PER_SQUARE_METER),
         pl.col(PRICE_PER_SQUARE_METER).count().alias(NB_TRANSACTIONS_PER_MONTH),
     )
 
@@ -119,14 +119,14 @@ def get_info_per_month_cities_enough_transactions(
 
     if verbose:
         average_per_month_per_city.select(
-            pl.col(PRICE_PER_SQUARE_METER + "_moyen"),
+            pl.col(AVERAGE_PRICE_PER_SQUARE_METER),
             pl.col(NB_TRANSACTIONS_PER_MONTH),
         ).describe()
 
         # Cities that have at least 5 transactions per month
         cities_enough_transactions = (
             average_per_month_per_city_enough_transactions.group_by(CITY_UNIQUE_ID).agg(
-                pl.col(NB_TRANSACTIONS_PER_MONTH).min().name.suffix("_nombre_min")
+                pl.col(NB_TRANSACTIONS_PER_MONTH).min().alias("num_transactions_count_min")
             )
         )
 
@@ -175,9 +175,9 @@ def load_tax_households(
         "department",
         "city_id",
         "city",
-        "n_foyers_fiscaux",
-        "revenu_fiscal_moyen",
-        "montant_impot_moyen",
+        "num_tax_households",
+        "avg_taxable_income",
+        "avg_tax_amount",
     ],
 ) -> pl.DataFrame:
     tax_households = pl.read_csv(filepath, infer_schema_length=None)
@@ -209,24 +209,24 @@ def load_monthly_macro_eco_context_data(
 
     rent_reference_index = pl.read_csv(rent_reference_index_path, try_parse_dates=True)
     rent_reference_index = rent_reference_index.with_columns(
-        pl.col("date").dt.year().alias("annee"), pl.col("date").dt.month().alias("mois")
+        pl.col("date").dt.year().alias("year"), pl.col("date").dt.month().alias("month")
     )
 
     monthly_macro_eco_context = monthly_macro_eco_context.with_columns(
-        pl.col("date").dt.year().alias("annee"), pl.col("date").dt.month().alias("mois")
+        pl.col("date").dt.year().alias("year"), pl.col("date").dt.month().alias("month")
     )
 
     # Forward fill because the data is quarterly, not monthly
     monthly_macro_eco_context = (
         (
             monthly_macro_eco_context.join(
-                rent_reference_index, on=["annee", "mois"], how="left"
+                rent_reference_index, on=["year", "month"], how="left"
             )
-            .sort(["annee", "mois"])
-            .with_columns(pl.col("mois").forward_fill(), pl.col("IRL").forward_fill())
+            .sort(["year", "month"])
+            .with_columns(pl.col("month").forward_fill(), pl.col("rent_reference_index").forward_fill())
         )
         .drop("date_right")
-        .rename({"taux": "interest_rate", "IRL": "rent_reference_index"})
+        
     )
 
     return monthly_macro_eco_context
@@ -247,7 +247,7 @@ def add_economical_context_features(
     transactions_merged = transactions_merged.join(
         monthly_macro_eco_context,
         left_on=[TRANSACTION_YEAR, TRANSACTION_MONTH],
-        right_on=["annee", "mois"],
+        right_on=["year", "month"],
         how="left",
     )
 

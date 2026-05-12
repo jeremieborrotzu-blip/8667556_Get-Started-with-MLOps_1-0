@@ -17,7 +17,7 @@ def compute_city_features(
     verbose: bool = False,
 ):
     nb_transactions_per_department = transactions_per_city.group_by(grouping_columns).agg(
-        pl.sum(NB_TRANSACTIONS_PER_MONTH).alias("nb_transactions_department")
+        pl.sum(NB_TRANSACTIONS_PER_MONTH).alias("num_transactions_department")
     )
 
     transactions_per_city = transactions_per_city.join(
@@ -30,9 +30,9 @@ def compute_city_features(
         (
             100
             * pl.col(NB_TRANSACTIONS_PER_MONTH)
-            / pl.col("nb_transactions_department")
+            / pl.col("num_transactions_department")
         ).alias("city_transaction_ratio")
-    ).drop("nb_transactions_department")
+    ).drop("num_transactions_department")
 
     if verbose:
         print(transactions_per_city.select("city_transaction_ratio").describe())
@@ -77,7 +77,7 @@ def calculate_interest_rate_features(
     ).with_columns(
         pl.mean("variation_" + interest_rate_col)
         .rolling(index_column="date", period=aggregation_period)
-        .name.prefix("moyenne_glissante_" + aggregation_period + "_"),
+        .name.prefix("rolling_avg_" + aggregation_period + "_"),
     )
 
     return monthly_macro_eco_context
@@ -102,11 +102,11 @@ def compute_price_per_m2_features(
             pl.col(AVERAGE_PRICE_PER_SQUARE_METER)
             .rolling_mean(window_size=6)
             .over(CITY_UNIQUE_ID)
-            .alias("avg_price_per_m2_glissant_" + aggregation_period),
+            .alias("avg_price_per_m2_rolling_" + aggregation_period),
             pl.col(NB_TRANSACTIONS_PER_MONTH)
             .rolling_mean(window_size=6)
             .over(CITY_UNIQUE_ID)
-            .alias("nb_transaction_moyen_glissant_" + aggregation_period),
+            .alias("num_transactions_rolling_" + aggregation_period),
         )
         .filter(
             pl.all_horizontal(

@@ -122,7 +122,7 @@ monthly_macro_eco_context = load_monthly_macro_eco_context_data(
 )
 
 monthly_macro_eco_context = monthly_macro_eco_context.with_columns(
-    pl.col("mois").cast(pl.Int32)
+    pl.col("month").cast(pl.Int32)
 )
 
 # %%

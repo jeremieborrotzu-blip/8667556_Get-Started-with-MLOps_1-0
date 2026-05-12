@@ -73,7 +73,7 @@ highly_correlated_features = [
 # %%
 feature_names = [col for col in feature_names if col not in highly_correlated_features]
 feature_names = [
-    col for col in feature_names if col not in ["avg_price_per_m2", "price_per_m2_nombre"]
+    col for col in feature_names if col not in ["avg_price_per_m2", "num_transactions_month"]
 ]
 
 # %%
