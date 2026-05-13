@@ -1,1 +1,1 @@
-['type_batiment_Appartement', 'living_area', 'avg_price_per_m2_previous_month', 'num_transactions_previous_month', 'interest_rate', 'interest_rate_change', 'interest_rate_acceleration', 'longitude', 'latitude', 'off_plan']
+['building_type_apartment', 'living_area', 'avg_price_per_m2_previous_month', 'num_transactions_previous_month', 'interest_rate', 'interest_rate_change', 'interest_rate_acceleration', 'longitude', 'latitude', 'off_plan']

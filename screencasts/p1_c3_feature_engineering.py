@@ -177,7 +177,7 @@ cols_extra_info = [
     "region",
     "address",
     "postal_code",
-    "cadastral_parcel_id",
+    "land_register_parcel_id",
     "price_per_m2",          # Excluded to avoid data leakage
     "avg_price_per_m2",    # Excluded to avoid data leakage
     "department_name",  # Excluded for now
@@ -188,7 +188,7 @@ transactions_metadata = transactions.select(
 )
 
 cols_to_drop = [
-    "USD_par_habitant",
+    "usd_per_capita",
     "date",
     "city_right",
 ]

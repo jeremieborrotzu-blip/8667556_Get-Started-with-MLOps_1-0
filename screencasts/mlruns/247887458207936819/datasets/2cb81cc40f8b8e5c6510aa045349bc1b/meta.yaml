@@ -3,8 +3,8 @@ name: dataset
 profile: '{"num_rows": 14807, "num_elements": 562666}'
 schema: '{"mlflow_colspec": [{"type": "integer", "name": "id_transaction", "required":
   true}, {"type": "double", "name": "price", "required": true}, {"type": "integer",
-  "name": "type_batiment_Appartement", "required": true}, {"type": "integer", "name":
-  "type_batiment_Maison", "required": true}, {"type": "integer", "name": "off_plan", "required":
+  "name": "building_type_apartment", "required": true}, {"type": "integer", "name":
+  "building_type_house", "required": true}, {"type": "integer", "name": "off_plan", "required":
   true}, {"type": "integer", "name": "num_rooms", "required": true}, {"type": "integer",
   "name": "living_area", "required": true}, {"type": "double", "name": "latitude",
   "required": true}, {"type": "double", "name": "longitude", "required": true}, {"type":
