@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "supervisedlearning"
 version = "0.1.0"
-description = "Course code for the supervised machine learning course"
+description = "Course code for the Get Started with MLOps course"
 authors = ["Zakaria BOUAYYAD"]
 readme = "README.md"
 

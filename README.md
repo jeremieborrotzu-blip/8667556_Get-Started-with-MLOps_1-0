@@ -1,9 +1,9 @@
-# Master Supervised Learning
+# Get Started with MLOps
 
 
 ## Context
 
-This repository centralizes all resources (screencast code, exercise starters and solutions) for the running project associated with the course "Master Supervised Learning". The folder structure is as follows:
+This repository centralizes all resources (screencast code, exercise starters and solutions) for the running project associated with the course "Get Started with MLOps". The folder structure is as follows:
 
 * **exercises:** Starter and solution notebooks for each chapter of the course
 * **screencasts:** Code presented during each screencast
