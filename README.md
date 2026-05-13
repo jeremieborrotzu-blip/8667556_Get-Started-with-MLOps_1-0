@@ -32,7 +32,7 @@ To keep the repository lightweight, the data files and models saved via MLflow h
 
 Each city in the dataset can be uniquely identified by a combination of the columns: `city_id`, `city`, and `department`.
 
-> **Note on "department":** France is divided into administrative regions, which are themselves divided into smaller units called *départements*. Throughout this course, we use the English approximation **"department"** to refer to these units. While not a perfect translation, it keeps the code readable for international learners.
+> **Note on "department":** This course uses a French real-estate dataset as its running case study. Some of its location features reflect the French administrative structure: France is divided into regions, which are themselves divided into smaller units called *départements*. Throughout this course, we use the practical English label **"department"** to refer to those units. It is not a perfect one-to-one administrative equivalent, but it keeps the dataset and code easier to follow for international learners.
 
 Regarding the classification target column, it is computed as follows:
 * The average price per m2 is computed at the department level for a given month
